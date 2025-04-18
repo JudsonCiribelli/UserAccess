@@ -1,0 +1,36 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.App {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 6px;
+  width: 720px;
+  height: 420px;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.input-container input {
+  width: 250px;
+  height: 40px;
+  padding: 10px;
+  font-size: 20px;
+}
+.input-container label {
+  font-size: 22px;
+}
