@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { db } from "./firebaseConection";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -23,6 +23,20 @@ const App = () => {
     setAge("");
     setEmail("");
     setName("");
+  };
+
+  const searchForUser = async () => {
+    const userRef = doc(db, "User");
+    await getDoc(userRef)
+      .then((snapshot) => {
+        setEmail(snapshot.data().email);
+        setName(snapshot.data().name);
+        setAge(snapshot.data().age);
+        console.log("Usuario encontrado");
+      })
+      .catch((error) => {
+        console.log({ error });
+      });
   };
 
   return (
