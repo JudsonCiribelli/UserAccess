@@ -6,7 +6,7 @@ import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 const App = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [age, setAge] = useState(0);
+  const [age, setAge] = useState("");
 
   const handleAddUser = async () => {
     await addDoc(collection(db, "User"), {
@@ -64,13 +64,17 @@ const App = () => {
           <label>Idade</label>
           <input
             value={age}
-            type="number"
+            type="text"
             placeholder="Digite sua idade"
             onChange={(e) => setAge(e.target.value)}
           />
         </div>
         <button type="submit" onClick={handleAddUser}>
           Cadastrar
+        </button>
+        <button type="submit" onClick={searchForUser}>
+          {" "}
+          Buscar
         </button>
         <div>
           <h1>Nome: {name}</h1>
