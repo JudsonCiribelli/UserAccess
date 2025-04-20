@@ -1,12 +1,14 @@
 import { useState } from "react";
 import "./App.css";
-import { db } from "./firebaseConection";
+import { auth, db } from "./firebaseConection";
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const App = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleAddUser = async () => {
     await addDoc(collection(db, "User"), {
@@ -39,6 +41,21 @@ const App = () => {
       });
   };
 
+  const handleLoginUser = async () => {
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        console.log("Usuario cadastrado com sucesso");
+      })
+      .catch((error) => {
+        console.log("Error ao cadastrar usuario");
+        if (error.code === "auth/week-password") {
+          console.log("Senha muito fraca!");
+        } else if (error.code === "auth/email-already-in-use") {
+          console.log("Usuario ja cadastrado");
+        }
+      });
+  };
+
   return (
     <div className="App">
       <div className="container">
@@ -61,6 +78,15 @@ const App = () => {
           />
         </div>
         <div className="input-container">
+          <label>Password</label>
+          <input
+            value={password}
+            type="email"
+            placeholder="Digite sua senha"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="input-container">
           <label>Idade</label>
           <input
             value={age}
@@ -69,6 +95,9 @@ const App = () => {
             onChange={(e) => setAge(e.target.value)}
           />
         </div>
+        <button type="submit" onClick={handleLoginUser}>
+          Login
+        </button>
         <button type="submit" onClick={handleAddUser}>
           Cadastrar
         </button>
@@ -76,11 +105,7 @@ const App = () => {
           {" "}
           Buscar
         </button>
-        <div>
-          <h1>Nome: {name}</h1>
-          <h1>Email: {email}</h1>
-          <h1>Idade: {age}</h1>
-        </div>
+        <div></div>
       </div>
     </div>
   );
