@@ -1,14 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { auth, db } from "./firebaseConection";
 import { addDoc, collection, doc, getDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 const App = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
+  const [userIsLogin, setUserIsLogin] = useState(false);
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          console.log("Dados recuperados!");
+          setUserIsLogin(true);
+        } else {
+          console.log("Faça login para prosseguir");
+          setUserIsLogin(false);
+        }
+      });
+    };
+    checkLogin();
+  }, []);
 
   const handleAddUser = async () => {
     await addDoc(collection(db, "User"), {
@@ -49,64 +68,44 @@ const App = () => {
       .catch((error) => {
         console.log("Error ao cadastrar usuario");
         if (error.code === "auth/week-password") {
-          console.log("Senha muito fraca!");
+          alert("Senha muito fraca!");
         } else if (error.code === "auth/email-already-in-use") {
-          console.log("Usuario ja cadastrado");
+          alert("Usuario ja cadastrado");
         }
       });
   };
 
   return (
     <div className="App">
-      <div className="container">
-        <div className="input-container">
-          <label>Nome</label>
-          <input
-            value={name}
-            type="text"
-            placeholder="Digite seu nome"
-            onChange={(e) => setName(e.target.value)}
-          />
+      {userIsLogin === true ? (
+        <div className="container">
+          <h1>Bem vindo</h1>
         </div>
-        <div className="input-container">
-          <label>Email</label>
-          <input
-            value={email}
-            type="email"
-            placeholder="Digite seu email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
+      ) : (
+        <div className="container">
+          <div className="input-container">
+            <label>Email</label>
+            <input
+              value={email}
+              type="email"
+              placeholder="Digite seu email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="input-container">
+            <label>Password</label>
+            <input
+              value={password}
+              type="email"
+              placeholder="Digite sua senha"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="btn" onClick={handleLoginUser}>
+            Login
+          </button>
         </div>
-        <div className="input-container">
-          <label>Password</label>
-          <input
-            value={password}
-            type="email"
-            placeholder="Digite sua senha"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="input-container">
-          <label>Idade</label>
-          <input
-            value={age}
-            type="text"
-            placeholder="Digite sua idade"
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </div>
-        <button type="submit" onClick={handleLoginUser}>
-          Login
-        </button>
-        <button type="submit" onClick={handleAddUser}>
-          Cadastrar
-        </button>
-        <button type="submit" onClick={searchForUser}>
-          {" "}
-          Buscar
-        </button>
-        <div></div>
-      </div>
+      )}
     </div>
   );
 };
