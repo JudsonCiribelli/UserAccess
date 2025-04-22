@@ -83,6 +83,7 @@ const App = () => {
         </div>
       ) : (
         <div className="container">
+          <h1>Logo</h1>
           <div className="input-container">
             <label>Email</label>
             <input
@@ -104,6 +105,11 @@ const App = () => {
           <button type="submit" className="btn" onClick={handleLoginUser}>
             Login
           </button>
+          <div>
+            <p>
+              Não possui conta ? <a href="/">Cadastre-se agora</a>
+            </p>
+          </div>
         </div>
       )}
     </div>
