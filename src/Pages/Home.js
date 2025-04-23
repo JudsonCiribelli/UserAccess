@@ -1,7 +1,11 @@
 const HomePage = () => {
   return (
-    <div>
-      <h1>HomePage</h1>
+    <div className="App">
+      <div className="container">
+        <div>
+          <h1>Qual tipo de serviço voce deseja agendar ? </h1>
+        </div>
+      </div>
     </div>
   );
 };
