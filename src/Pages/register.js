@@ -1,12 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../services/firebaseConection";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 
 const RegisterUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
   const [password, setPassword] = useState("");
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    const querySnapshot = await getDocs(collection(db, "User"));
+    const usersList = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setUsers(usersList);
+  };
 
   const handleAddUser = async () => {
     await addDoc(collection(db, "User"), {
@@ -31,7 +45,7 @@ const RegisterUser = () => {
     <div className="App">
       <div className="container">
         <h1>Registre-se</h1>
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className="input-container">
             <label>Nome</label>
             <input
