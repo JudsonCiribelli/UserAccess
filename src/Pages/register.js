@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { db } from "../services/firebaseConection";
+import { addDoc, collection } from "firebase/firestore";
 
 const RegisterUser = () => {
   const [name, setName] = useState("");
@@ -7,48 +9,66 @@ const RegisterUser = () => {
   const [password, setPassword] = useState("");
 
   const handleAddUser = async () => {
-    alert("Usuario criado com sucesso!");
+    await addDoc(collection(db, "User"), {
+      name: name,
+      email: email,
+      senha: password,
+      idade: age,
+    })
+      .then(() => {
+        console.log("Usuario cadastrado com sucesso!");
+        setName("");
+        setEmail("");
+        setAge("");
+        setPassword("");
+      })
+      .catch((error) => {
+        console.log({ error });
+      });
   };
+
   return (
     <div className="App">
       <div className="container">
         <h1>Registre-se</h1>
-        <div className="input-container">
-          <label>Nome</label>
-          <input
-            value={name}
-            type="text"
-            placeholder="Digite seu nome"
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="input-container">
-          <label>Email</label>
-          <input
-            value={email}
-            type="email"
-            placeholder="Digite seu email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="input-container">
-          <label>Password</label>
-          <input
-            value={password}
-            type="email"
-            placeholder="Digite sua senha"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="input-container">
-          <label>Idade</label>
-          <input
-            value={age}
-            type="text"
-            placeholder="Digite sua idade"
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </div>
+        <form>
+          <div className="input-container">
+            <label>Nome</label>
+            <input
+              value={name}
+              type="text"
+              placeholder="Digite seu nome"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="input-container">
+            <label>Email</label>
+            <input
+              value={email}
+              type="email"
+              placeholder="Digite seu email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="input-container">
+            <label>Password</label>
+            <input
+              value={password}
+              type="password"
+              placeholder="Digite sua senha"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="input-container">
+            <label>Idade</label>
+            <input
+              value={age}
+              type="text"
+              placeholder="Digite sua idade"
+              onChange={(e) => setAge(e.target.value)}
+            />
+          </div>
+        </form>
         <button type="submit" className="btn" onClick={handleAddUser}>
           Registrar-se
         </button>
