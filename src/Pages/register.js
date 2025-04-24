@@ -16,7 +16,10 @@ const RegisterUser = () => {
   const fetchUsers = async () => {
     const querySnapshot = await getDocs(collection(db, "User"));
     const usersList = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
+      name: doc.name,
+      email: doc.email,
+      idade: doc.age,
+      senha: doc.password,
       ...doc.data(),
     }));
     setUsers(usersList);
@@ -31,6 +34,7 @@ const RegisterUser = () => {
     })
       .then(() => {
         console.log("Usuario cadastrado com sucesso!");
+        console.log(users);
         setName("");
         setEmail("");
         setAge("");
@@ -86,6 +90,9 @@ const RegisterUser = () => {
         <button type="submit" className="btn" onClick={handleAddUser}>
           Registrar-se
         </button>
+        {users.map((user) => (
+          <li>{user.name}</li>
+        ))}
       </div>
     </div>
   );
