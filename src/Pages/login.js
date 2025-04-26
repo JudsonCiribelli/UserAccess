@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../App.css";
 import { auth } from "../services/firebaseConection";
 import {
@@ -6,10 +6,11 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { Link } from "react-router-dom";
+import { AppContext } from "../Context/AppContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
-  const [userIsLogin, setUserIsLogin] = useState(false);
+  const { userIsLogin, setUserIsLogin } = useContext(AppContext);
   const [password, setPassword] = useState("");
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const LoginPage = () => {
       });
     };
     checkLogin();
-  }, []);
+  }, [setUserIsLogin]);
 
   const handleLoginUser = async () => {
     await createUserWithEmailAndPassword(auth, email, password)
