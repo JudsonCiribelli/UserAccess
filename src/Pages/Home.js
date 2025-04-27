@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./Home.css";
+
 const HomePage = () => {
   const [service, setService] = useState("");
   const [listService, setListService] = useState([]);
@@ -7,8 +8,7 @@ const HomePage = () => {
   const handleRegisterService = () => {
     alert("Service agendado com sucesso!");
     setService("");
-    setListService(service);
-    console.log(listService);
+    listService.push(service);
   };
   return (
     <div className="App">
@@ -31,7 +31,7 @@ const HomePage = () => {
               <input
                 type="checkbox"
                 id="serviceTwo"
-                value="Manutenção em notebooks"
+                value="Manutenção em desktop"
                 onChange={(e) => setService(e.target.value)}
               />
               <label for="serviceTwo">Manutenção em desktop</label>
@@ -40,17 +40,21 @@ const HomePage = () => {
               <input
                 type="checkbox"
                 id="serviceThree"
-                value="Manutenção em notebooks"
+                value="Manutenção em celulares"
                 onChange={(e) => setService(e.target.value)}
               />
               <label for="serviceThree">Manutenção em celulares</label>
             </div>
           </form>
-          <p>{service}</p>
         </div>
         <button type="submit" onClick={handleRegisterService}>
           Registrar
         </button>
+        <ul>
+          {listService.map((service) => (
+            <li>{service}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );
