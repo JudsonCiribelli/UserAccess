@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "../services/firebaseConection";
+import "./register.css";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 
 const RegisterUser = () => {
@@ -90,9 +91,23 @@ const RegisterUser = () => {
         <button type="submit" className="btn" onClick={handleAddUser}>
           Registrar-se
         </button>
-        {users.map((user) => (
-          <li>{user.name}</li>
-        ))}
+      </div>
+      <div className="userContainer">
+        <div className="userTitle">
+          <h1>Usuarios cadastrados</h1>
+        </div>
+        <div className="userData">
+          <ul>
+            {users.map((user) => (
+              <>
+                <li>Nome: {user.name}</li>
+
+                <li>Email: {user.email}</li>
+                <li>Idade: {user.idade}</li>
+              </>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
