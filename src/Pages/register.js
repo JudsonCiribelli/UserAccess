@@ -8,6 +8,7 @@ const RegisterUser = () => {
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
   const [password, setPassword] = useState("");
+  const [services, setServices] = useState("");
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -87,6 +88,15 @@ const RegisterUser = () => {
               onChange={(e) => setAge(e.target.value)}
             />
           </div>
+          <div className="input-container">
+            <label>Serviço</label>
+            <textarea
+              value={services}
+              type="text"
+              placeholder="Descreva com detalhes o problema apresentado pelo seu dispositivo!"
+              onChange={(e) => setServices(e.target.value)}
+            />
+          </div>
         </form>
         <button type="submit" className="btn" onClick={handleAddUser}>
           Registrar-se
@@ -104,6 +114,7 @@ const RegisterUser = () => {
 
                 <li>Email: {user.email}</li>
                 <li>Idade: {user.idade}</li>
+                <li>Problema: {user.servico}</li>
               </>
             ))}
           </ul>

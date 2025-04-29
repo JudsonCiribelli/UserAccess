@@ -15,7 +15,35 @@
   border-radius: 6px;
   width: 720px;
   height: 620px;
-  gap: 10px;
+  gap: 4px;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.input-container input {
+  width: 250px;
+  height: 40px;
+  padding: 10px;
+  font-size: 20px;
+}
+.input-container label {
+  font-size: 22px;
+}
+.input-container textarea {
+  padding: 10px;
+  height: 120px;
+}
+.container .btn {
+  width: 250px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
 }
 .userContainer {
   display: flex;
@@ -48,6 +76,7 @@
 .userContainer .userData ul {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 .userContainer .userData ul li {
   list-style: none;
