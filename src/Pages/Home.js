@@ -9,7 +9,9 @@ const HomePage = () => {
     alert("Service agendado com sucesso!");
     setService("");
     listService.push(service);
+    setListService([service]);
   };
+
   return (
     <div className="App">
       <div className="container">

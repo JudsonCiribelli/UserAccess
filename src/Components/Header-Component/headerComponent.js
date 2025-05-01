@@ -20,7 +20,7 @@ const HeaderComponent = () => {
             </button>
           ) : (
             <button>
-              <Link className="link">
+              <Link className="link" to="/login">
                 <FaRegUserCircle className="icon" />
               </Link>
             </button>
